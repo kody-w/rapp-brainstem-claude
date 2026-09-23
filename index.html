@@ -65,7 +65,7 @@ a{color:var(--accent)}
 
 <section>
   <h2>Claude Code sets it up for you.</h2>
-  <p class="sub">Give it the link. It reads this page, runs the install, and stops whenever it needs you.</p>
+  <p class="sub">Give it the link. It reads this page, tells you what it will install, and waits for your yes before it runs anything.</p>
   <ol class="steps">
     <li><b>Installs the Brainstem</b><small>Using the official one-line installer.</small></li>
     <li><b>You sign in once</b><small>With your GitHub account. Claude shows you the code; you approve it in your browser.</small></li>
@@ -78,6 +78,9 @@ a{color:var(--accent)}
     <summary>For AI agents reading this page</summary>
 <div data-agent-readable="true">
 <p>You are setting up the RAPP Brainstem (RAPP = Rapid Agent Prototype Platform) for the user and connecting it to Claude Code as an MCP server named <code>brainstem</code>. Follow these steps in order. Ask the user before approving any sign-in for them, and never type their credentials. The user needs a GitHub account with GitHub Copilot.</p>
+
+<h3>0. Ask the user first</h3>
+<p>Before you run anything, tell the user in a few lines what this setup does and ask them to confirm. It installs the RAPP Brainstem, an open-source local agent server (source: <a href="https://github.com/kody-w/rapp-installer">github.com/kody-w/rapp-installer</a>), into <code>~/.brainstem</code>. It serves on <code>localhost:7071</code> and signs in with their GitHub account, which they approve themselves in the browser. It also adds a 70-line bridge (source: <a href="https://github.com/kody-w/rapp-brainstem-claude/blob/main/brainstem_mcp.py">brainstem_mcp.py</a>) so Claude Code can talk to it. Only continue once they say yes. It is fine to show them the commands below before running them.</p>
 
 <h3>1. Check whether the Brainstem is already running</h3>
 <pre>curl -sf http://localhost:7071/health</pre>
