@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RAPP Brainstem for Claude Code</title>
-<meta name="description" content="Paste one line into Claude Code and it installs the RAPP Brainstem, your local AI agent server, and connects to it.">
+<meta name="description" content="RAPP Brainstem, set up for Claude Code.">
 <link rel="canonical" href="https://kody-w.github.io/rapp-brainstem-claude/">
 <meta property="og:title" content="RAPP Brainstem for Claude Code">
-<meta property="og:description" content="Paste one line into Claude Code. It installs the Brainstem and connects to it.">
+<meta property="og:description" content="RAPP Brainstem, set up for Claude Code.">
 <meta name="theme-color" content="#0f766e">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230f766e'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +28,8 @@ h1{font-size:clamp(2.1rem,6vw,3rem);line-height:1.1;letter-spacing:-.03em;margin
 .copy{display:flex;gap:12px;align-items:center;width:100%;max-width:36rem;margin:0 auto;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font:700 14px/1.4 "JetBrains Mono",monospace;text-align:left;cursor:pointer;transition:border-color .15s}
 .copy:hover{border-color:var(--accent)}
 .copy span{flex:1;word-break:break-word}
+.dl{display:inline-block;margin-top:14px;padding:12px 22px;border-radius:12px;background:var(--accent);color:#fff;font-weight:600;text-decoration:none}
+.note{color:var(--muted);font-size:.9rem;margin:10px auto 0;max-width:36rem}
 .copy svg{flex:none;width:18px;height:18px;color:var(--accent)}
 .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px}
 .chip{padding:4px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:.85rem;font-weight:600}
@@ -54,21 +56,22 @@ a{color:var(--accent)}
 <div class="wrap">
 <header>
   <h1><span class="mark" aria-hidden="true"></span>Brainstem for Claude Code</h1>
-  <p class="lede">Your own AI agent server, running on your computer. Claude Code installs it and connects to it, so you can hand work to your agents without leaving Claude.</p>
+  <p class="lede">Your own AI agent server, running on your computer. Claude sets it up and connects to it for you.</p>
   <p class="paste-label">Paste this into Claude Code</p>
   <button class="copy" id="copy" type="button" aria-label="Copy: Set up the RAPP Brainstem from kody-w.github.io/rapp-brainstem-claude">
     <span id="prompt">Set up the RAPP Brainstem from kody-w.github.io/rapp-brainstem-claude</span>
     <svg id="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
   </button>
   <div class="chips"><span class="chip">Runs on your machine</span><span class="chip">Uses your GitHub Copilot</span><span class="chip">No API key</span></div>
+  
 </header>
 
 <section>
-  <h2>Claude Code sets it up for you.</h2>
+  <h2>Claude sets it up for you.</h2>
   <p class="sub">Give it the link. It reads this page, tells you what it will install, and waits for your yes before it runs anything.</p>
   <ol class="steps">
-    <li><b>Installs the Brainstem</b><small>Using the official one-line installer.</small></li>
-    <li><b>You sign in once</b><small>With your GitHub account. Claude shows you the code; you approve it in your browser.</small></li>
+    <li><b>Installs the Brainstem</b><small>Using the official installer.</small></li>
+    <li><b>You approve it</b><small>Claude says what it will install and waits for your yes.</small></li>
     <li><b>Connects Claude</b><small>After that, ask Claude to “ask my Brainstem…” and it hands the work over.</small></li>
   </ol>
 </section>
@@ -94,30 +97,33 @@ a{color:var(--accent)}
 <p>Run it in the background. When it finishes installing it keeps running as the server. Watch its output. If it prints a GitHub device code, show the user the code and <a href="https://github.com/login/device">https://github.com/login/device</a>, then wait while they approve it. Poll <code>curl -sf http://localhost:7071/health</code> every few seconds until it answers. A first install can take a few minutes. If sign-in was skipped, the user can finish it at <a href="http://localhost:7071/login">http://localhost:7071/login</a>.</p>
 
 <h3>3. Connect Claude Code</h3>
-<p>This installs a small bridge next to the Brainstem and registers it. macOS / Linux:</p>
-<pre>mkdir -p ~/.brainstem/claude
-curl -fsSL https://kody-w.github.io/rapp-brainstem-claude/brainstem_mcp.py -o ~/.brainstem/claude/brainstem_mcp.py
-~/.brainstem/venv/bin/python -m venv ~/.brainstem/claude/venv
-~/.brainstem/claude/venv/bin/pip install -q "mcp&gt;=2,&lt;3" requests
-claude mcp add --scope user brainstem -- ~/.brainstem/claude/venv/bin/python ~/.brainstem/claude/brainstem_mcp.py</pre>
+<p>Install the bridge next to the Brainstem. macOS / Linux:</p>
+<pre>mkdir -p ~/.brainstem/mcp-bridge
+curl -fsSL https://kody-w.github.io/rapp-brainstem-claude/brainstem_mcp.py -o ~/.brainstem/mcp-bridge/brainstem_mcp.py
+~/.brainstem/venv/bin/python -m venv ~/.brainstem/mcp-bridge/venv
+~/.brainstem/mcp-bridge/venv/bin/pip install -q &quot;mcp&gt;=2,&lt;3&quot; requests</pre>
 <p>Windows (PowerShell):</p>
-<pre>$d = "$env:USERPROFILE\.brainstem\claude"; mkdir $d -Force | Out-Null
-irm https://kody-w.github.io/rapp-brainstem-claude/brainstem_mcp.py -OutFile "$d\brainstem_mcp.py"
-&amp; "$env:USERPROFILE\.brainstem\venv\Scripts\python.exe" -m venv "$d\venv"
-&amp; "$d\venv\Scripts\pip.exe" install -q "mcp&gt;=2,&lt;3" requests
-claude mcp add --scope user brainstem -- "$d\venv\Scripts\python.exe" "$d\brainstem_mcp.py"</pre>
+<pre>$d = &quot;$env:USERPROFILE\.brainstem\mcp-bridge&quot;; mkdir $d -Force | Out-Null
+irm https://kody-w.github.io/rapp-brainstem-claude/brainstem_mcp.py -OutFile &quot;$d\brainstem_mcp.py&quot;
+&amp; &quot;$env:USERPROFILE\.brainstem\venv\Scripts\python.exe&quot; -m venv &quot;$d\venv&quot;
+&amp; &quot;$d\venv\Scripts\pip.exe&quot; install -q &quot;mcp&gt;=2,&lt;3&quot; requests</pre>
+<p>Then register it. macOS / Linux:</p>
+<pre>claude mcp add --scope user brainstem -- ~/.brainstem/mcp-bridge/venv/bin/python ~/.brainstem/mcp-bridge/brainstem_mcp.py</pre>
+<p>Windows (PowerShell, same <code>$d</code> as above):</p>
+<pre>claude mcp add --scope user brainstem -- &quot;$d\venv\Scripts\python.exe&quot; &quot;$d\brainstem_mcp.py&quot;</pre>
 <p>If <code>claude mcp get brainstem</code> already shows a server, ask the user before replacing it.</p>
 
 <h3>4. Confirm</h3>
 <pre>claude mcp get brainstem</pre>
-<p>It should say Connected. The tools load in new sessions, so tell the user to restart Claude Code or run <code>/mcp</code>. Then call the <code>capabilities</code> tool and tell the user which agents their Brainstem has. The bridge gives two tools. <code>chat(user_input, session_id?)</code> sends a plain-language request; pass the returned <code>session_id</code> to continue the conversation. <code>capabilities()</code> reports status, model and agents.</p>
+<p>It should say Connected. The tools load in new sessions, so tell the user to restart Claude Code or run <code>/mcp</code>.</p>
+<p>Then call the <code>capabilities</code> tool and tell the user which agents their Brainstem has. The bridge gives two tools. <code>chat(user_input, session_id?)</code> sends a plain-language request; pass the returned <code>session_id</code> to continue the conversation. <code>capabilities()</code> reports status, model and agents.</p>
 </div>
   </details>
 </section>
 </div>
 </main>
 <footer class="wrap">
-  RAPP Brainstem · installer from <a href="https://github.com/kody-w/rapp-installer">kody-w/rapp-installer</a> · bridge source: <a href="brainstem_mcp.py">brainstem_mcp.py</a>
+  RAPP Brainstem · installer from <a href="https://github.com/kody-w/rapp-installer">kody-w/rapp-installer</a> · pages built with <a href="https://github.com/kody-w/ai-setup-pages">ai-setup-pages</a>
 </footer>
 <script>
 const btn=document.getElementById('copy'),icon=document.getElementById('icon');

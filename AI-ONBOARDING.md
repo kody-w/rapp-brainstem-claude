@@ -1,5 +1,7 @@
 # AI onboarding pages — the pattern
 
+> **The generator now lives in [kody-w/ai-setup-pages](https://github.com/kody-w/ai-setup-pages)**: a generic, product-agnostic template (one JSON file per AI app). Regenerate every Brainstem page with `python gen.py products/rapp-brainstem.json` there. Add new AI apps as `hosts/<slug>.json`.
+
 One page per AI host. A person pastes a single line into that host, and the host installs the
 RAPP Brainstem and connects to it. The model is Zernio's `zernio.com/claude`.
 
@@ -60,17 +62,6 @@ New public repo `kody-w/rapp-brainstem-<host>`, containing `index.html`, `.nojek
 README. Enable Pages on `main` at `/`, and check that the live page serves the new content before
 handing over the link. Never push to `kody-w/rapp-installer`.
 
-## Backlog: next hosts (by reach × fit)
+## All pages
 
-Each needs a shell tool (to run the installer) and MCP support. The exact `mcp add` syntax for each is **unverified** until its page passes the recipe.
-
-1. **OpenAI Codex CLI**: `codex mcp add brainstem -- <python> <bridge>`
-2. **VS Code (Copilot agent mode)**: `code --add-mcp '{"name":"brainstem","command":...}'`
-3. **Cursor**: `~/.cursor/mcp.json` (or a cursor:// install deeplink)
-4. **Gemini CLI**: `gemini mcp add brainstem <python> <bridge>`
-5. **Claude Desktop**: has no shell, so it can't self-install. Ship a `.mcpb` desktop extension, and the page tells the user to install the Brainstem with the one-liner first.
-6. **Windsurf**: `~/.codeium/windsurf/mcp_config.json`
-7. **Cline**: `cline_mcp_settings.json` via the MCP Servers panel
-8. **Goose**: `goose configure` → add extension (or goose:// deeplink)
-9. **OpenCode**: `opencode.json` → `mcp` block
-10. **Kiro**: `~/.kiro/settings/mcp.json`
+All 13 are live at `kody-w.github.io/rapp-brainstem-<slug>`: claude, copilot, codex, vscode, cursor, gemini, claude-desktop, windsurf, cline, goose, opencode, kiro, and mcp (the catch-all page). Per-app verification status lives in the [ai-setup-pages README](https://github.com/kody-w/ai-setup-pages#apps-covered). The Claude Desktop bundle source is in `kody-w/rapp-brainstem-claude-desktop/extension` (a Node bridge with no dependencies; `brainstem_mcp.js` here is the same file).
