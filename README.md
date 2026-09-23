@@ -6,3 +6,5 @@ Paste into Claude Code: `Set up the RAPP Brainstem from kody-w.github.io/rapp-br
 - `brainstem_mcp.py` — MCP bridge from Claude Code to a local Brainstem (`chat`, `capabilities`)
 
 Live: https://kody-w.github.io/rapp-brainstem-claude/
+
+Making a page for another AI host? Follow [AI-ONBOARDING.md](AI-ONBOARDING.md).
